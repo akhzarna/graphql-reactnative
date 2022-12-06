@@ -4,10 +4,20 @@ import React, { Component, useEffect, useState } from 'react';
 
 import { useQuery, gql } from '@apollo/client';
 
+// Task 
+// Filters code, curency, continent
+
 const COUNTRY_QUERY = gql`
   query CountryQuery{
-    countries{
+    country (code:"AD") {
       name
+      capital
+      emoji
+      code
+      currency
+      continent{
+        name
+      }
     }
   }
 `
@@ -19,11 +29,12 @@ export default function Home({navigation}) {
   useEffect(()=>{
     console.log('GraphQL ===', data)
   })
+
   return (
     <View style={{flex:1, backgroundColor:'white'}}>
       <Text style={{fontSize:38, justifyContent:'center'}}> GraphQL </Text>
       <FlatList
-        data={data.countries}
+        data={data?.countries}
         renderItem={ ({item}) =>
           <View style={{backgroundColor:'green', marginBottom:10, height:40}}>
             <Text style={{color:'white'}}>{item.name}</Text>
